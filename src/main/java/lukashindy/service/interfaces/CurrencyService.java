@@ -13,5 +13,5 @@ public interface CurrencyService {
 
     Set<Currency> addSet() throws ParserConfigurationException, IOException, SAXException;
 
-//    List<Currency> findAll();
+    List<Currency> findAll();
 }

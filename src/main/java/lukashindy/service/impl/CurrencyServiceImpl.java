@@ -19,6 +19,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +28,7 @@ import java.util.Set;
 public class CurrencyServiceImpl implements CurrencyService {
 
     private String url_request = "http://www.cbr.ru/scripts/XML_daily.asp";
+    Set<Currency> currencySet = new HashSet<>();
 
     private final CurrencyRepository currencyRepository;
 
@@ -38,33 +40,36 @@ public class CurrencyServiceImpl implements CurrencyService {
     @PostConstruct
     @Order(10)
     public Set<Currency> addSet() throws ParserConfigurationException, IOException, SAXException {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(new URL(url_request).openStream());
-        document.getDocumentElement().normalize();
 
-        NodeList nList = document.getElementsByTagName("Valute");
-        Set<Currency> currencySet = new HashSet<>();
+        if (currencyRepository.findAll().size() == 0) {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document document = builder.parse(new URL(url_request).openStream());
+            document.getDocumentElement().normalize();
 
-        for (int temp = 0; temp < nList.getLength(); temp++) {
-            Node node = nList.item(temp);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                Element eElement = (Element) node;
-                currencySet.add(new Currency(
-                        eElement.getAttribute("ID"),
-                        eElement.getElementsByTagName("NumCode").item(0).getTextContent(),
-                        eElement.getElementsByTagName("CharCode").item(0).getTextContent(),
-                        Integer.valueOf(eElement.getElementsByTagName("Nominal").item(0).getTextContent()),
-                        eElement.getElementsByTagName("Name").item(0).getTextContent()));
+            NodeList nList = document.getElementsByTagName("Valute");
+
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+                Node node = nList.item(temp);
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) node;
+                    currencySet.add(new Currency(
+                            eElement.getAttribute("ID"),
+                            eElement.getElementsByTagName("NumCode").item(0).getTextContent(),
+                            eElement.getElementsByTagName("CharCode").item(0).getTextContent(),
+                            Integer.valueOf(eElement.getElementsByTagName("Nominal").item(0).getTextContent()),
+                            eElement.getElementsByTagName("Name").item(0).getTextContent()));
+                }
             }
+            currencyRepository.saveAll(currencySet);
         }
-//        if (currencyRepository.findAll().size() == 0)
-//            currencyRepository.saveAll(currencySet);
         return currencySet;
     }
 
-//    @Override
-//    public List<Currency> findAll() {
-//        return currencyRepository.findAll();
-//    }
+    @Override
+    public List<Currency> findAll() {
+        List<Currency> currencyList = new ArrayList<>();
+        currencyRepository.findAll().iterator().forEachRemaining(currencyList::add);
+        return currencyList;
+    }
 }
