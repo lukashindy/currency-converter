@@ -14,10 +14,10 @@
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <!--            <form th:object="${}" th:action="@{//}" method="post">-->
-            <form method="post">
+                        <form th:object="${history}" th:action="@{/converter/form}" method="post">
+<!--            <form method="post">-->
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <!--                <input type="hidden" th:field="*{id}"/>-->
+<!--                                <input type="hidden" th:field="*{id}"/>-->
                 <div class="pannel-group">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -28,11 +28,11 @@
                                 <div class="col-md-6 form-group">
                                     <div class="col-md-2"></div>
                                     <div class="col-md-9 form-group" th:align="center">
-                                        <label>Исходная валюта:</label>
-                                        <select class="form-control" name="source" id="source">
+                                        <label for="source_currency">Исходная валюта:</label>
+                                        <select id="source_currency" class="form-control" name="source" th:field="*{sourceCharCode}">
                                             <option th:each="rate : ${list}"
-                                                    th:value="${rate.getCurrency().getId()}"
-                                                    th:selected="${rate.getCurrency().getId()}"
+                                                    th:value="${rate.getCurrency().getCharCode()}"
+                                                    th:selected="${rate.getCurrency().getCharCode()}"
                                                     th:text="${'(' + rate.getCurrency().getCharCode() + ') ' + rate.getCurrency().getName()}">
                                             </option>
                                         </select>
@@ -42,11 +42,11 @@
                                 <div class="col-md-6 form-group">
                                     <div class="col-md-2"></div>
                                     <div class="col-md-9 form-group" th:align="center">
-                                        <label>Целевая валюта:</label>
-                                        <select class="form-control" name="target" id="target">
+                                        <label for="target_currency">Целевая валюта:</label>
+                                        <select id="target_currency" class="form-control" name="target" th:field="*{targetCharCode}">
                                             <option th:each="rate : ${list}"
-                                                    th:value="${rate.getCurrency().getId()}"
-                                                    th:selected="${rate.getCurrency().getId()}"
+                                                    th:value="${rate.getCurrency().getCharCode()}"
+                                                    th:selected="${rate.getCurrency().getCharCode()}"
                                                     th:text="${'(' + rate.getCurrency().getCharCode() + ') ' + rate.getCurrency().getName()}">
                                             </option>
                                         </select>
@@ -61,7 +61,7 @@
                                         <label for="source_sum">Начальная сумма:</label>
                                         <!--                                    <input type="text" class="form-control" th:field="*{}"/>-->
                                         <input id="source_sum" type="text" class="form-control" name="source_sum"
-                                               placeholder="Введите сумму" autofocus="autofocus">
+                                               placeholder="Введите сумму" autofocus="autofocus" th:field="*{sourceSum}">
                                     </div>
                                 </div>
 
