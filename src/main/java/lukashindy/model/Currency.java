@@ -32,6 +32,10 @@ public class Currency {
     @Column(name = "name")
     private String name;
 
+    public Currency(String id) {
+        this.id = id;
+    }
+
     public Currency(String id, String numCode, String charCode, Integer nominal, String name) {
         this.id = id;
         this.numCode = numCode;
