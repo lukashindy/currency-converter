@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Конвертер</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <!--            <form th:object="${}" th:action="@{//}" method="post">-->
+            <form method="post">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <!--                <input type="hidden" th:field="*{id}"/>-->
+                <div class="pannel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h1 class="panel-title" th:align="center">Конвертер валют</h1>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-9 form-group" th:align="center">
+                                        <label>Исходная валюта:</label>
+                                        <select class="form-control" name="source" id="source">
+                                            <option th:each="rate : ${list}"
+                                                    th:value="${rate.getCurrency().getId()}"
+                                                    th:selected="${rate.getCurrency().getId()}"
+                                                    th:text="${'(' + rate.getCurrency().getCharCode() + ') ' + rate.getCurrency().getName()}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 form-group">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-9 form-group" th:align="center">
+                                        <label>Целевая валюта:</label>
+                                        <select class="form-control" name="target" id="target">
+                                            <option th:each="rate : ${list}"
+                                                    th:value="${rate.getCurrency().getId()}"
+                                                    th:selected="${rate.getCurrency().getId()}"
+                                                    th:text="${'(' + rate.getCurrency().getCharCode() + ') ' + rate.getCurrency().getName()}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-9 form-group" th:align="center">
+                                        <label for="source_sum">Начальная сумма:</label>
+                                        <!--                                    <input type="text" class="form-control" th:field="*{}"/>-->
+                                        <input id="source_sum" type="text" class="form-control" name="source_sum"
+                                               placeholder="Введите сумму" autofocus="autofocus">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 form-group">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-9 form-group" th:align="center">
+                                        <label for="target_sum">Полученная сумма (см. после конвертации)</label>
+                                        <!--                                    <input type="text" class="form-control" th:field="*{}"/>-->
+                                        <input id="target_sum" type="text" class="form-control" disabled="disabled"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Конвертировать</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

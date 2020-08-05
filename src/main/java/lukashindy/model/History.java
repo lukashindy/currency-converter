@@ -18,7 +18,12 @@
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;
 //
+//    @ManyToOne
+//    @JoinColumn(name = "currency_id")
 //    private Currency sourceCurrency;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "currency_id")
 //    private Currency targetCurrency;
 //
 //    @Column(name = "source_sum", nullable = false)
