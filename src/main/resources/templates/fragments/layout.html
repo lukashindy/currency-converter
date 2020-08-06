@@ -41,6 +41,11 @@
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     <span>История</span>
                 </li>
+
+                <li th:replace="::menuItem ('/logout','logout','logout','logout','Выйти из системы')">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    <span>Уже зарегистрированы? <a href="/" th:href="@{/logout}">Выход из системы</a>
+                </li>
             </ul>
         </div>
     </div>

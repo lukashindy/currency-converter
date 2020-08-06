@@ -7,6 +7,7 @@ import lukashindy.service.interfaces.CurrencyService;
 import lukashindy.service.interfaces.HistoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -44,7 +45,12 @@ public class CurrencyController {
     }
 
     @PostMapping("/converter/form")
-    public String saveNewConversion(@ModelAttribute("history") ConverterForm converterForm, Model model) {
+    public String saveNewConversion(@ModelAttribute("history") ConverterForm converterForm, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "converter-form";
+        }
+
         History savedHistory = historyService.saveNewConversion(converterForm);
         returnedHistory = savedHistory;
         lastHistories.add(0, returnedHistory);
