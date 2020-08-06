@@ -12,7 +12,9 @@ import lukashindy.service.interfaces.HistoryService;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -53,4 +55,13 @@ public class HistoryServiceImpl implements HistoryService {
         System.out.println(savedHistory.getId());
         return savedHistory;
     }
+
+    @Override
+    public List<History> findAll() {
+        List<History> list = new ArrayList<>();
+        historyRepository.findAll().iterator().forEachRemaining(list::add);
+        return list;
+    }
+
+
 }

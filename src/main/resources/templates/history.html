@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body}, 'form')}">
+<head>
+    <meta charset="UTF-8">
+    <title>История конвертаций</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-9 ">
+                            <h1 class="panel-title">История конвертаций</h1>
+                        </div>
+                        <div class="col-md-3">
+                            <a class="btn btn-default" href="#" th:href="@{'/converter/form'}" role="button">Новый расчет</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover ">
+                            <tbody>
+                            <tr>
+                                <th>Дата</th>
+                                <th>Исходная валюта</th>
+                                <th>Целевая валюта</th>
+                                <th>Исходная сумма</th>
+                                <th>Получаемая сумма</th>
+                            </tr>
+                            <tr th:each="history : ${histories}">
+                                <p>
+                                <td th:text="${history.getDate()}">2020-06-04</td>
+                                <td th:text="${history.getSourceCurrency().getCharCode()}">USR</td>
+                                <td th:text="${history.getTargetCurrency().getCharCode()}">RUB</td>
+                                <td th:text="${history.getSourceSum()}">100</td>
+                                <td th:text="${history.getTargetSum()}">150</td>
+                                </p>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

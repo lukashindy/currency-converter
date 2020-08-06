@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body}, 'form')}">
 <head>
     <meta charset="UTF-8">
     <title>Конвертер</title>
@@ -14,10 +14,8 @@
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-                        <form th:object="${history}" th:action="@{/converter/form}" method="post">
-<!--            <form method="post">-->
+            <form th:object="${history}" th:action="@{/converter/form}" method="post">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-<!--                                <input type="hidden" th:field="*{id}"/>-->
                 <div class="pannel-group">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -29,7 +27,8 @@
                                     <div class="col-md-2"></div>
                                     <div class="col-md-9 form-group" th:align="center">
                                         <label for="source_currency">Исходная валюта:</label>
-                                        <select id="source_currency" class="form-control" name="source" th:field="*{sourceCharCode}">
+                                        <select id="source_currency" class="form-control" name="source"
+                                                th:field="*{sourceCharCode}">
                                             <option th:each="rate : ${list}"
                                                     th:value="${rate.getCurrency().getCharCode()}"
                                                     th:selected="${rate.getCurrency().getCharCode()}"
@@ -43,7 +42,8 @@
                                     <div class="col-md-2"></div>
                                     <div class="col-md-9 form-group" th:align="center">
                                         <label for="target_currency">Целевая валюта:</label>
-                                        <select id="target_currency" class="form-control" name="target" th:field="*{targetCharCode}">
+                                        <select id="target_currency" class="form-control" name="target"
+                                                th:field="*{targetCharCode}">
                                             <option th:each="rate : ${list}"
                                                     th:value="${rate.getCurrency().getCharCode()}"
                                                     th:selected="${rate.getCurrency().getCharCode()}"
@@ -59,18 +59,17 @@
                                     <div class="col-md-2"></div>
                                     <div class="col-md-9 form-group" th:align="center">
                                         <label for="source_sum">Начальная сумма:</label>
-                                        <!--                                    <input type="text" class="form-control" th:field="*{}"/>-->
                                         <input id="source_sum" type="text" class="form-control" name="source_sum"
-                                               placeholder="Введите сумму" autofocus="autofocus" th:field="*{sourceSum}">
+                                               placeholder="Введите сумму" autofocus="autofocus"
+                                               th:field="*{sourceSum}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 form-group">
                                     <div class="col-md-2"></div>
                                     <div class="col-md-9 form-group" th:align="center">
-                                        <label for="target_sum">Полученная сумма (см. после конвертации)</label>
-                                        <!--                                    <input type="text" class="form-control" th:field="*{}"/>-->
-                                        <input id="target_sum" type="text" class="form-control" disabled="disabled"/>
+                                        <label for="target_sum">Полученная сумма</label>
+                                        <input id="target_sum" type="text" class="form-control" disabled="disabled" th:value="0"/>
                                     </div>
                                 </div>
                             </div>
@@ -80,28 +79,33 @@
                 </div>
             </form>
 
-            <div th:if="${param.success}">
-                <div class="alert alert-info">
-                    You've successfully registered to our awesome app!
+            <div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover ">
+                            <tbody>
+                            <tr>
+                                <th>Исходная валюта</th>
+                                <th>Целевая валюта</th>
+                                <th>Исходная сумма</th>
+                                <th>Получаемая сумма</th>
+                                <th>Дата</th>
+                            </tr>
+                            <tr th:each="history : ${lastHistories}">
+                                <p>
+                                <td th:text="${history.getSourceCurrency().getCharCode()}">USR</td>
+                                <td th:text="${history.getTargetCurrency().getCharCode()}">RUB</td>
+                                <td th:text="${history.getSourceSum()}">100</td>
+                                <td th:text="${history.getTargetSum()}">150</td>
+                                <td th:text="${history.getDate()}">2020-05-08</td>
+                                </p>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-
-<!--            <div th:if="${param.success}">-->
-<!--                <div class="panel-body">-->
-<!--                    <div class="table-responsive">-->
-<!--                        <table class="table table-hover ">-->
-<!--                            <tbody>-->
-<!--                            <tr>-->
-<!--                                <p>-->
-<!--                                <td th:text="${savedHistory.sourceSum}">1</td>-->
-<!--                                &lt;!&ndash;                                <td th:text="${savedHistory.name}">IU</td>&ndash;&gt;-->
-<!--                                </p>-->
-<!--                            </tr>-->
-<!--                            </tbody>-->
-<!--                        </table>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+        </div>
     </div>
 </div>
 
