@@ -25,9 +25,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(UserRegistration userRegistration) {
+
         if (!userRegistration.getPassword().equals(userRegistration.getConfirmedPassword())) {
             throw new RuntimeException("Пароли не совпадают!");
         }
+
         User user = new User(userRegistration.getUsername(), passwordEncoder.encode(userRegistration.getPassword()));
         userRepository.save(user);
         return user;

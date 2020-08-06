@@ -27,23 +27,19 @@
 
                 <div class="form-group">
                     <label for="username">Логин : </label>
-                    <input id="username" type="text" class="form-control" name="username" placeholder="Логин" autofocus="autofocus">
+                    <input id="username" type="text" class="form-control" name="username" placeholder="Логин"
+                           autofocus="autofocus">
                 </div>
 
                 <div class="form-group">
                     <label for="password">Пароль : </label>
-                    <input id="password" type="text" class="form-control" name="password" placeholder="Пароль" autofocus="autofocus">
+                    <input id="password" type="text" class="form-control" name="password" placeholder="Пароль"
+                           autofocus="autofocus">
                 </div>
 
                 <div class="form-group">
-                    <div class="row">
-                        <div class="col-sm-6 col-sm-offset-3">
-                            <input type="submit" name="login-submit" id="login-submit" class="form-control btn btn-primary" value="Log in">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
+                    <input type="submit" name="login-submit" id="login-submit" class="btn btn-success"
+                           value="Войти в систему">
                     <span>Новый пользователь? <a href="/" th:href="@{/registration}">Регистрация тут!</a></span>
                 </div>
             </form>
