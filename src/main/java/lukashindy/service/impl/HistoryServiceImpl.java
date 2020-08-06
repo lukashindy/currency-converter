@@ -48,6 +48,9 @@ public class HistoryServiceImpl implements HistoryService {
 
         History history = new History(source, target, converterForm.getSourceSum(), targetSum, new Date());
         historyRepository.save(history);
-        return history;
+
+        History savedHistory = historyRepository.findById(history.getId()).orElse(null);
+        System.out.println(savedHistory.getId());
+        return savedHistory;
     }
 }

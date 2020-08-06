@@ -79,7 +79,29 @@
                     </div>
                 </div>
             </form>
-        </div>
+
+            <div th:if="${param.success}">
+                <div class="alert alert-info">
+                    You've successfully registered to our awesome app!
+                </div>
+            </div>
+
+<!--            <div th:if="${param.success}">-->
+<!--                <div class="panel-body">-->
+<!--                    <div class="table-responsive">-->
+<!--                        <table class="table table-hover ">-->
+<!--                            <tbody>-->
+<!--                            <tr>-->
+<!--                                <p>-->
+<!--                                <td th:text="${savedHistory.sourceSum}">1</td>-->
+<!--                                &lt;!&ndash;                                <td th:text="${savedHistory.name}">IU</td>&ndash;&gt;-->
+<!--                                </p>-->
+<!--                            </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
     </div>
 </div>
 

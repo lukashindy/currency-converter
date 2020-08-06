@@ -36,8 +36,9 @@ public class CurrencyController {
     }
 
     @PostMapping("/converter/form")
-    public String saveNewConversion(@ModelAttribute("history") ConverterForm converterForm) {
-        historyService.saveNewConversion(converterForm);
+    public String saveNewConversion(@ModelAttribute("history") ConverterForm converterForm, Model model) {
+        model.addAttribute("savedHistory", historyService.saveNewConversion(converterForm));
+//        historyService.saveNewConversion(converterForm);
         return "redirect:/converter/form?success";
     }
 
