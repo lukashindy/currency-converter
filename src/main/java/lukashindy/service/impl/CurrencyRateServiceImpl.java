@@ -30,6 +30,7 @@ public class CurrencyRateServiceImpl implements CurrencyRateService {
 
     private final String url_request = "http://www.cbr.ru/scripts/XML_daily.asp";
 
+    Set<CurrencyRate> addCurrencyRate = new HashSet<>();
     private final CurrencyRateRepository currencyRateRepository;
     private final CurrencyRepository currencyRepository;
 
@@ -42,16 +43,20 @@ public class CurrencyRateServiceImpl implements CurrencyRateService {
     @PostConstruct
     @Order(2)
     public Set<CurrencyRate> addCurrencyRate() throws ParserConfigurationException, IOException, SAXException, SQLException {
+        addRouble();
+        return addRate();
+    }
+
+    @Override
+    public List<CurrencyRate> findAll() {
+        List<CurrencyRate> currencyRates = new ArrayList<>();
+        currencyRateRepository.findAll().iterator().forEachRemaining(currencyRates::add);
+        return currencyRates;
+    }
+
+    public Set<CurrencyRate> addRate() throws IOException, SAXException, ParserConfigurationException {
 
         NodeList nList = HelperParse.nodeList(url_request, "Valute");
-
-        Set<CurrencyRate> addCurrencyRate = new HashSet<>();
-
-        Currency rub = currencyRepository.findById("RUB").orElse(null);
-        if (rub != null) {
-            addCurrencyRate.add(new CurrencyRate(rub, new Date(),1.0));
-            currencyRateRepository.saveAll(addCurrencyRate);
-        }
 
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node node = nList.item(temp);
@@ -67,12 +72,11 @@ public class CurrencyRateServiceImpl implements CurrencyRateService {
         return addCurrencyRate;
     }
 
-    @Override
-    public List<CurrencyRate> findAll() {
-        List<CurrencyRate> currencyRates = new ArrayList<>();
-        currencyRateRepository.findAll().iterator().forEachRemaining(currencyRates::add);
-        return currencyRates;
+    private void addRouble() {
+        Currency rub = currencyRepository.findById("RUB").orElse(null);
+        if (rub != null) {
+            addCurrencyRate.add(new CurrencyRate(rub, new Date(),1.0));
+            currencyRateRepository.saveAll(addCurrencyRate);
+        }
     }
-
-
 }

@@ -14,4 +14,6 @@ public interface CurrencyRateService {
     Set<CurrencyRate> addCurrencyRate() throws ParserConfigurationException, IOException, SAXException, SQLException;
 
     List<CurrencyRate> findAll();
+
+    Set<CurrencyRate> addRate() throws IOException, SAXException, ParserConfigurationException;
 }

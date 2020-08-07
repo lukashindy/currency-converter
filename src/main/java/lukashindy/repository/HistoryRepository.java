@@ -23,8 +23,8 @@ public interface HistoryRepository extends JpaRepository<History, Long> {
     @Query("SELECT h from History h " +
             "where h.sourceCurrency.charCode like %:source% " +
             "and h.targetCurrency.charCode like %:target% " +
-//            "and h.date = :date " +
-//            "and h.date like %:date%" +
+//            "and h.date = :date" +
+//            "and h.date like lower(concat('%', :date ,'%'))" +
             "order by h.date desc")
     List<History> findAll(@Param("source") String source,
                           @Param("target") String target);

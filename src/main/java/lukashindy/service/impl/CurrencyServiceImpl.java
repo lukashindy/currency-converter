@@ -78,4 +78,6 @@ public class CurrencyServiceImpl implements CurrencyService {
         currencyRepository.findAll().iterator().forEachRemaining(currencyList::add);
         return currencyList;
     }
+
+
 }

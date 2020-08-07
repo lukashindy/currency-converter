@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import static java.lang.String.*;
 
 @Controller
 @RequestMapping
@@ -38,11 +42,20 @@ public class HistoryController {
     @GetMapping("/history")
     public String getHistory(Model model,
                              @Param("source") String source,
-                             @Param("target") String target) {
+                             @Param("target") String target,
+                             @Param("date") String date) throws ParseException {
+        Date searchDate;
+
+//        try {
+//            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//            searchDate = format.parse(date);
+//        } catch (NullPointerException e) {
+//            searchDate = null;
+//        }
 
         model.addAttribute("currencies", currencyRateRepository.findAllByDateOrderByCurrencyCharCode(new Date()));
 
-        if (source != null || target != null ) {
+        if (source != null || target != null) {
             histories = historyService.findAll(source, target);
         } else {
             histories = historyRepository.findAllByOrderByDateDesc();
@@ -50,17 +63,5 @@ public class HistoryController {
         model.addAttribute("histories", histories);
         return "history";
     }
-
-
-    @PostMapping("/history")
-    public String searchHistory() {
-        return "redirect:/history";
-    }
-
-
-//    @GetMapping("/history/{}")
-//    public String searchHistory() {
-//        return "redirect:/history";
-//    }
 
 }

@@ -9,7 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +56,7 @@ public class CurrencyController {
     }
 
     @PostMapping("/converter/form")
-    public String saveNewConversion(@ModelAttribute("history") ConverterForm converterForm, BindingResult bindingResult) {
+    public String saveNewConversion(@ModelAttribute("history") ConverterForm converterForm, BindingResult bindingResult) throws IOException, SAXException, ParserConfigurationException {
 
         if (bindingResult.hasErrors())
             return "converter-form";

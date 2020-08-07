@@ -3,8 +3,8 @@ package lukashindy.utils;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class MoneyParsing {
@@ -18,11 +18,9 @@ public class MoneyParsing {
         return new BigDecimal(number).setScale(4, RoundingMode.HALF_DOWN).doubleValue();
     }
 
-    public static void main(String[] args) {
-        String pattern = "MM.dd.yyyy HH:mm";
-        DateFormat df = new SimpleDateFormat(pattern);
-        Date today = Calendar.getInstance().getTime();
-        String todayAsString = df.format(today);
-        System.out.println("Today is: " + todayAsString);
+    public static void main(String[] args) throws ParseException {
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        Date searchDate = format.parse("02-05-2020");
+        System.out.println(searchDate);
     }
 }

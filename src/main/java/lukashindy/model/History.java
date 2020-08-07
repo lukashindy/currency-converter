@@ -33,6 +33,7 @@ public class History {
     @Column(name = "target_sum", nullable = false)
     private Double targetSum;
 
+    @DateTimeFormat
     @Column(name = "date_history", nullable = false)
     private Date date;
 
@@ -44,51 +45,15 @@ public class History {
         this.date = date;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Currency getSourceCurrency() {
-        return sourceCurrency;
-    }
-
-    public void setSourceCurrency(Currency sourceCurrency) {
-        this.sourceCurrency = sourceCurrency;
-    }
-
-    public Currency getTargetCurrency() {
-        return targetCurrency;
-    }
-
-    public void setTargetCurrency(Currency targetCurrency) {
-        this.targetCurrency = targetCurrency;
-    }
-
-    public Double getSourceSum() {
-        return sourceSum;
-    }
-
-    public void setSourceSum(Double sourceSum) {
-        this.sourceSum = sourceSum;
-    }
-
-    public Double getTargetSum() {
-        return targetSum;
-    }
-
-    public void setTargetSum(Double targetSum) {
-        this.targetSum = targetSum;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    @Override
+    public String toString() {
+        return "History{" +
+                "id=" + id +
+                ", sourceCurrency=" + sourceCurrency +
+                ", targetCurrency=" + targetCurrency +
+                ", sourceSum=" + sourceSum +
+                ", targetSum=" + targetSum +
+                ", date=" + date +
+                '}';
     }
 }
