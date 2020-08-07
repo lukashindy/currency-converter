@@ -5,6 +5,7 @@ import lukashindy.model.CurrencyRate;
 import lukashindy.repository.CurrencyRateRepository;
 import lukashindy.repository.CurrencyRepository;
 import lukashindy.service.interfaces.CurrencyService;
+import lukashindy.utils.HelperParse;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -19,10 +20,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class CurrencyServiceImpl implements CurrencyService {
@@ -41,13 +39,21 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Order(10)
     public Set<Currency> addSet() throws ParserConfigurationException, IOException, SAXException {
 
-        if (currencyRepository.findAll().size() == 0) {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(new URL(url_request).openStream());
-            document.getDocumentElement().normalize();
+        Currency rub = currencyRepository.findById("RUB").orElse(null);
+        if (rub == null) {
+            currencySet.add(new Currency(
+                    "RUB",
+                    "643",
+                    "RUB",
+                    1,
+                    "Российский рубль"
+            ));
+            currencyRepository.saveAll(currencySet);
+        }
 
-            NodeList nList = document.getElementsByTagName("Valute");
+        if (currencyRepository.findAll().size() == 0) {
+
+            NodeList nList = HelperParse.nodeList(url_request, "Valute");
 
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node node = nList.item(temp);

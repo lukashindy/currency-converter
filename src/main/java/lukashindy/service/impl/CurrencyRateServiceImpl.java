@@ -5,6 +5,7 @@ import lukashindy.model.CurrencyRate;
 import lukashindy.repository.CurrencyRateRepository;
 import lukashindy.repository.CurrencyRepository;
 import lukashindy.service.interfaces.CurrencyRateService;
+import lukashindy.utils.HelperParse;
 import lukashindy.utils.MoneyParsing;
 import org.postgresql.util.PGmoney;
 import org.springframework.core.annotation.Order;
@@ -41,13 +42,16 @@ public class CurrencyRateServiceImpl implements CurrencyRateService {
     @PostConstruct
     @Order(2)
     public Set<CurrencyRate> addCurrencyRate() throws ParserConfigurationException, IOException, SAXException, SQLException {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(new URL(url_request).openStream());
-        document.getDocumentElement().normalize();
 
-        NodeList nList = document.getElementsByTagName("Valute");
+        NodeList nList = HelperParse.nodeList(url_request, "Valute");
+
         Set<CurrencyRate> addCurrencyRate = new HashSet<>();
+
+        Currency rub = currencyRepository.findById("RUB").orElse(null);
+        if (rub != null) {
+            addCurrencyRate.add(new CurrencyRate(rub, new Date(),1.0));
+            currencyRateRepository.saveAll(addCurrencyRate);
+        }
 
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node node = nList.item(temp);
@@ -69,4 +73,6 @@ public class CurrencyRateServiceImpl implements CurrencyRateService {
         currencyRateRepository.findAll().iterator().forEachRemaining(currencyRates::add);
         return currencyRates;
     }
+
+
 }

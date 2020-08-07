@@ -69,7 +69,8 @@
                                     <div class="col-md-2"></div>
                                     <div class="col-md-9 form-group" th:align="center">
                                         <label for="target_sum">Полученная сумма</label>
-                                        <input id="target_sum" type="text" class="form-control" disabled="disabled" th:value="0"/>
+                                        <input id="target_sum" type="text" class="form-control" disabled="disabled" th:value="${targetSum}"/>
+<!--                                        <input id="target_sum" type="text" class="form-control" disabled="disabled" th:value="${returnedHistory.getTargetSum() != null}? ${returnedHistory.getTargetSum()} : 0"/>-->
                                     </div>
                                 </div>
                             </div>
@@ -91,14 +92,12 @@
                                 <th>Получаемая сумма</th>
                                 <th>Дата</th>
                             </tr>
-                            <tr th:each="history : ${lastHistories}">
-                                <p>
-                                <td th:text="${history.getSourceCurrency().getCharCode()}">USR</td>
-                                <td th:text="${history.getTargetCurrency().getCharCode()}">RUB</td>
-                                <td th:text="${history.getSourceSum()}">100</td>
-                                <td th:text="${history.getTargetSum()}">150</td>
-                                <td th:text="${history.getDate()}">2020-05-08</td>
-                                </p>
+                            <tr th:each="last : ${lastHistories}">
+                                <td th:text="${last.getSourceCurrency().getCharCode()}">USR</td>
+                                <td th:text="${last.getTargetCurrency().getCharCode()}">RUB</td>
+                                <td th:text="${last.getSourceSum()}">100</td>
+                                <td th:text="${last.getTargetSum()}">150</td>
+                                <td th:text="${#dates.format(last.getDate(), 'dd.MM.yyyy HH:mm')}">2020-05-08</td>
                             </tr>
                             </tbody>
                         </table>

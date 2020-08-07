@@ -20,6 +20,8 @@ public class CurrencyController {
     private List<History> lastHistories = new ArrayList<>();
     private History returnedHistory;
 
+    private Double targetSum = 0.0;
+
     private final HistoryService historyService;
     private final CurrencyService currencyService;
     private final CurrencyRateService currencyRateService;
@@ -39,29 +41,37 @@ public class CurrencyController {
     @GetMapping("/converter/form")
     public String getForm(Model model) {
         model.addAttribute("list", currencyRateService.findAll());
+
+
+
+
         model.addAttribute("history", new ConverterForm());
         model.addAttribute("lastHistories", lastHistories);
+        model.addAttribute("targetSum", targetSum);
+        model.addAttribute("returnedHistory", returnedHistory);
         return "converter-form";
     }
 
     @PostMapping("/converter/form")
     public String saveNewConversion(@ModelAttribute("history") ConverterForm converterForm, BindingResult bindingResult) {
 
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors())
             return "converter-form";
-        }
 
-        History savedHistory = historyService.saveNewConversion(converterForm);
-        returnedHistory = savedHistory;
+        if (lastHistories.size() == 1)
+            lastHistories.remove(0);
+
+        returnedHistory = historyService.saveNewConversion(converterForm);
         lastHistories.add(0, returnedHistory);
+        targetSum = lastHistories.get(0).getTargetSum();
         return "redirect:/converter/form";
     }
 
-    @GetMapping("/converter/history")
-    public String getHistory(Model model) {
-        model.addAttribute("histories", historyService.findAll());
-        model.addAttribute("last", returnedHistory);
-        return "history";
-    }
+//    @GetMapping("/converter/history")
+//    public String getHistory(Model model) {
+//        model.addAttribute("histories", historyService.findAll());
+//        model.addAttribute("last", returnedHistory);
+//        return "history";
+//    }
 
 }

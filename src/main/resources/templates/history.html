@@ -22,9 +22,56 @@
                             <h1 class="panel-title">История конвертаций</h1>
                         </div>
                         <div class="col-md-3">
-                            <a class="btn btn-default" href="#" th:href="@{'/converter/form'}" role="button">Новый расчет</a>
+                            <a class="btn btn-default" href="#" th:href="@{'/converter/form'}" role="button">Новый
+                                расчет</a>
                         </div>
                     </div>
+                </div>
+
+                <div class="row">
+
+                    <form th:action="@{/history}">
+                        <div class="col-md-3">
+                            <div class="col-md-12 form-group" th:align="center">
+                                <label for="date">Дата: </label>
+                                <input id="date" name="date" type="date" class="form-control" placeholder="Дата"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="col-md-12 form-group" th:align="center">
+                                <label for="sourceCharCode">Исходная валюта:</label>
+                                <select id="sourceCharCode" class="form-control" name="source">
+                                    <option value="" th:text="Все" selected></option>
+                                    <option th:each="rate : ${currencies}"
+                                            th:value="${rate.getCurrency().getCharCode()}"
+                                            th:text="${rate.getCurrency().getCharCode()}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="col-md-12 form-group" th:align="center">
+                                <label for="source_currency">Целевая валюта:</label>
+                                <select id="source_currency" class="form-control" name="target">
+                                    <option value="" th:text="Все" selected></option>
+                                    <option th:each="rate : ${currencies}"
+                                            th:value="${rate.getCurrency().getCharCode()}"
+                                            th:text="${rate.getCurrency().getCharCode()}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="col-md-10 form-group" th:align="center">
+                                <label for="search"></label>
+                                <br>
+                                <input type="submit" id="search" class="btn btn-success" value="Поиск">
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="panel-body">
@@ -39,21 +86,46 @@
                                 <th>Получаемая сумма</th>
                             </tr>
                             <tr th:each="history : ${histories}">
-                                <p>
-                                <td th:text="${history.getDate()}">2020-06-04</td>
+                                <td th:text="${#dates.format(history.getDate(), 'dd.MM.yyyy HH:mm')}">2020-05-08</td>
                                 <td th:text="${history.getSourceCurrency().getCharCode()}">USR</td>
                                 <td th:text="${history.getTargetCurrency().getCharCode()}">RUB</td>
                                 <td th:text="${history.getSourceSum()}">100</td>
                                 <td th:text="${history.getTargetSum()}">150</td>
-                                </p>
                             </tr>
                             </tbody>
                         </table>
+
+                        <!--                        <nav aria-label="Pagination" th:if="${histories.totalPages gt 0}">-->
+                        <!--                            <ul class="pagination justify-content-center font-weight-bold">-->
+                        <!--                                <li class="page-item" th:classappend="${histories.number eq 0} ? 'disabled'">-->
+                        <!--                                    <a class="page-link"-->
+                        <!--                                       th:href="@{/history?page={id}(id=${histories.number lt 2 ? 1 : histories.number})}"-->
+                        <!--                                       aria-label="Previous" title="Previous Page" data-toggle="tooltip">-->
+                        <!--                                        <span aria-hidden="true">&laquo;</span>-->
+                        <!--                                    </a>-->
+                        <!--                                </li>-->
+                        <!--                                <li class="page-item" th:classappend="${i eq histories.number + 1} ? 'active'"-->
+                        <!--                                    th:each="i : ${#numbers.sequence( 1, histories.totalPages, 1)}">-->
+                        <!--                                    <a class="page-link" th:href="@{/history?page={id}(id=${i})}" th:text="${i}"-->
+                        <!--                                       th:title="${'Page '+ i}" data-toggle="tooltip"></a>-->
+                        <!--                                </li>-->
+                        <!--                                <li class="page-item"-->
+                        <!--                                    th:classappend="${histories.number + 1 eq histories.totalPages} ? 'disabled'">-->
+                        <!--                                    <a class="page-link"-->
+                        <!--                                       th:href="@{/history?page={id}(id=${histories.number + 2})}"-->
+                        <!--                                       aria-label="Next" title="Next Page" data-toggle="tooltip">-->
+                        <!--                                        <span aria-hidden="true">&raquo;</span>-->
+                        <!--                                    </a>-->
+                        <!--                                </li>-->
+                        <!--                            </ul>-->
+                        <!--                        </nav>-->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
 </div>
 
 </body>

@@ -16,7 +16,7 @@ import java.util.Date;
 @Entity
 @Table(name = "currency_rate")
 @IdClass(CurrencyRateId.class)
-public class CurrencyRate implements Serializable {
+public class CurrencyRate implements Serializable, Comparable<CurrencyRate> {
 
     @Id
     @ManyToOne
@@ -36,4 +36,8 @@ public class CurrencyRate implements Serializable {
         this.value = value;
     }
 
+    @Override
+    public int compareTo(CurrencyRate o) {
+        return this.currency.getCharCode().compareTo(o.getCurrency().getCharCode());
+    }
 }
