@@ -1,25 +1,19 @@
 package lukashindy.service.impl;
 
 import lukashindy.model.Currency;
-import lukashindy.model.CurrencyRate;
-import lukashindy.repository.CurrencyRateRepository;
 import lukashindy.repository.CurrencyRepository;
 import lukashindy.service.interfaces.CurrencyService;
 import lukashindy.utils.HelperParse;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.annotation.PostConstruct;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 
 @Service

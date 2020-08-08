@@ -41,6 +41,7 @@ public class HistoryServiceImpl implements HistoryService {
         Currency source = currencyRepository.findCurrencyByCharCode(converterForm.getSourceCharCode());
 
         Optional<CurrencyRate> checkRates = currencyRateRepository.findByCurrencyIdAndDate(source.getId(), new Date());
+
         if (checkRates.isEmpty()) {
             Set<CurrencyRate> set = currencyRateService.addRate();
         }

@@ -7,21 +7,16 @@ import lukashindy.repository.CurrencyRepository;
 import lukashindy.service.interfaces.CurrencyRateService;
 import lukashindy.utils.HelperParse;
 import lukashindy.utils.MoneyParsing;
-import org.postgresql.util.PGmoney;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.annotation.PostConstruct;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -29,8 +24,8 @@ import java.util.*;
 public class CurrencyRateServiceImpl implements CurrencyRateService {
 
     private final String url_request = "http://www.cbr.ru/scripts/XML_daily.asp";
+    private final Set<CurrencyRate> addCurrencyRate = new HashSet<>();
 
-    Set<CurrencyRate> addCurrencyRate = new HashSet<>();
     private final CurrencyRateRepository currencyRateRepository;
     private final CurrencyRepository currencyRepository;
 

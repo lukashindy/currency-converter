@@ -3,8 +3,6 @@ package lukashindy.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
-import org.postgresql.util.PGmoney;
 
 import javax.persistence.*;
 import java.io.Serializable;

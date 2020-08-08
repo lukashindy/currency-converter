@@ -18,9 +18,4 @@ public class MoneyParsing {
         return new BigDecimal(number).setScale(4, RoundingMode.HALF_DOWN).doubleValue();
     }
 
-    public static void main(String[] args) throws ParseException {
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-        Date searchDate = format.parse("02-05-2020");
-        System.out.println(searchDate);
-    }
 }
