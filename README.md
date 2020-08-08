@@ -21,7 +21,7 @@ CREATE TABLE currency (
     id         varchar(10)  PRIMARY KEY,
     num_code   char(3) NOT NULL,
     char_code  char(3) NOT NULL,
-    nominal    money NOT NULL,
+    nominal    bigdecimal(18,4) NOT NULL,
     name       varchar(30) NOT NULL
 );
  
