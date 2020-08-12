@@ -11,6 +11,8 @@ import lukashindy.repository.HistoryRepository;
 import lukashindy.service.interfaces.CurrencyRateService;
 import lukashindy.service.interfaces.HistoryService;
 import lukashindy.utils.MoneyParsing;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
@@ -60,12 +62,19 @@ public class HistoryServiceImpl implements HistoryService {
         return historyRepository.findById(history.getId()).orElse(null);
     }
 
-//    public List<History> findAll(String source, String target, Date searchDate) {
-//        return historyRepository.findAll(source, target, searchDate);
-//    }
-
     public List<History> findAll(String source, String target) {
         return historyRepository.findAll(source, target);
     }
+
+    @Override
+    public List<History> findAllByOrderByIdDesc() {
+        return historyRepository.findAllByOrderByIdDesc();
+    }
+
+    public List<History> findAll(String source, String target, Date date) {
+        return historyRepository.findAll(source, target, date);
+    }
+
+
 
 }

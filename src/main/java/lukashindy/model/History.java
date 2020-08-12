@@ -33,7 +33,7 @@ public class History {
     @Column(name = "target_sum", nullable = false)
     private Double targetSum;
 
-    @DateTimeFormat
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "date_history", nullable = false)
     private Date date;
 

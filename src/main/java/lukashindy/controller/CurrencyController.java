@@ -45,9 +45,6 @@ public class CurrencyController {
     public String getForm(Model model) {
         model.addAttribute("list", currencyRateService.findAll());
 
-
-
-
         model.addAttribute("history", new ConverterForm());
         model.addAttribute("lastHistories", lastHistories);
         model.addAttribute("targetSum", targetSum);
@@ -69,12 +66,5 @@ public class CurrencyController {
         targetSum = lastHistories.get(0).getTargetSum();
         return "redirect:/converter/form";
     }
-
-//    @GetMapping("/converter/history")
-//    public String getHistory(Model model) {
-//        model.addAttribute("histories", historyService.findAll());
-//        model.addAttribute("last", returnedHistory);
-//        return "history";
-//    }
 
 }

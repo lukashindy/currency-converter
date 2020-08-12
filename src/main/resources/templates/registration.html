@@ -21,6 +21,12 @@
                 </div>
             </div>
 
+            <div th:if="${param.errors}">
+                <div class="alert alert-info">
+                    Пароли не совпадают!
+                </div>
+            </div>
+
             <h1> Регистрация </h1>
             <form th:action="@{/registration}" method="post" th:object="${user}">
 

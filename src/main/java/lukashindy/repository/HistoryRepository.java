@@ -14,20 +14,23 @@ import java.util.Date;
 import java.util.List;
 
 public interface HistoryRepository extends JpaRepository<History, Long> {
-//    Page<History> findAll(Pageable pageable);
 
-    List<History> findAllByOrderByDateDesc();
-
-//    List<History> findAllBySourceCurrencyCharCodeOrTargetCurrencyCharCodeOrDateOrderByDate(HistorySearchValues values);
+    List<History> findAllByOrderByIdDesc();
 
     @Query("SELECT h from History h " +
             "where h.sourceCurrency.charCode like %:source% " +
             "and h.targetCurrency.charCode like %:target% " +
-//            "and h.date = :date" +
-//            "and h.date like lower(concat('%', :date ,'%'))" +
-            "order by h.date desc")
+            "order by h.id desc")
     List<History> findAll(@Param("source") String source,
                           @Param("target") String target);
-//                          @Param("date") Date date);
+
+    @Query("SELECT h from History h " +
+            "where h.sourceCurrency.charCode like %:source% " +
+            "and h.targetCurrency.charCode like %:target% " +
+            "and h.date = :date " +
+            "order by h.id desc")
+    List<History> findAll(@Param("source") String source,
+                          @Param("target") String target,
+                          @Param("date") Date date);
 
 }

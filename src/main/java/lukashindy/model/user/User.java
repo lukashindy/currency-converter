@@ -27,14 +27,6 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinTable(
-//            name = "users_roles",
-//            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
-//    )
-//    private Collection<Role> roles;
-
     public User(String username, String password) {
         this.username = username;
         this.password = password;

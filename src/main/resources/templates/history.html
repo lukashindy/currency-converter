@@ -29,7 +29,6 @@
                 </div>
 
                 <div class="row">
-
                     <form th:action="@{/history}">
                         <div class="col-md-3">
                             <div class="col-md-12 form-group" th:align="center">
@@ -70,6 +69,9 @@
                                 <br>
                                 <input type="submit" id="search" class="btn btn-success" value="Поиск">
                             </div>
+                            <div class="col-md-10 form-group" th:align="center">
+                                <a th:href="@{/history}" value="Сбросить" type="submit">Сбросить</a>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -86,7 +88,7 @@
                                 <th>Получаемая сумма</th>
                             </tr>
                             <tr th:each="history : ${histories}">
-                                <td th:text="${#dates.format(history.getDate(), 'dd.MM.yyyy HH:mm')}">2020-05-08</td>
+                                <td th:text="${#dates.format(history.getDate(), 'dd.MM.yyyy')}">2020-05-08</td>
                                 <td th:text="${history.getSourceCurrency().getCharCode()}">USR</td>
                                 <td th:text="${history.getTargetCurrency().getCharCode()}">RUB</td>
                                 <td th:text="${history.getSourceSum()}">100</td>
@@ -95,30 +97,6 @@
                             </tbody>
                         </table>
 
-                        <!--                        <nav aria-label="Pagination" th:if="${histories.totalPages gt 0}">-->
-                        <!--                            <ul class="pagination justify-content-center font-weight-bold">-->
-                        <!--                                <li class="page-item" th:classappend="${histories.number eq 0} ? 'disabled'">-->
-                        <!--                                    <a class="page-link"-->
-                        <!--                                       th:href="@{/history?page={id}(id=${histories.number lt 2 ? 1 : histories.number})}"-->
-                        <!--                                       aria-label="Previous" title="Previous Page" data-toggle="tooltip">-->
-                        <!--                                        <span aria-hidden="true">&laquo;</span>-->
-                        <!--                                    </a>-->
-                        <!--                                </li>-->
-                        <!--                                <li class="page-item" th:classappend="${i eq histories.number + 1} ? 'active'"-->
-                        <!--                                    th:each="i : ${#numbers.sequence( 1, histories.totalPages, 1)}">-->
-                        <!--                                    <a class="page-link" th:href="@{/history?page={id}(id=${i})}" th:text="${i}"-->
-                        <!--                                       th:title="${'Page '+ i}" data-toggle="tooltip"></a>-->
-                        <!--                                </li>-->
-                        <!--                                <li class="page-item"-->
-                        <!--                                    th:classappend="${histories.number + 1 eq histories.totalPages} ? 'disabled'">-->
-                        <!--                                    <a class="page-link"-->
-                        <!--                                       th:href="@{/history?page={id}(id=${histories.number + 2})}"-->
-                        <!--                                       aria-label="Next" title="Next Page" data-toggle="tooltip">-->
-                        <!--                                        <span aria-hidden="true">&raquo;</span>-->
-                        <!--                                    </a>-->
-                        <!--                                </li>-->
-                        <!--                            </ul>-->
-                        <!--                        </nav>-->
                     </div>
                 </div>
             </div>

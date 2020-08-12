@@ -16,9 +16,10 @@ public interface HistoryService {
 
     History saveNewConversion(ConverterForm converterForm) throws ParserConfigurationException, SAXException, IOException;
 
+    List<History> findAll(String source, String target, Date date);
+
     List<History> findAll(String source, String target);
 
-//    List<History> findAll(String source, String target, Date date);
+    List<History> findAllByOrderByIdDesc();
 
-//    Page<History> findAll(Pageable pageable);
 }

@@ -26,6 +26,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(UserRegistration userRegistration) {
 
+        User newUser = userRepository.findByUsername(userRegistration.getUsername());
+        if (newUser != null) {
+            throw new RuntimeException("Введенный вами логин уже существует");
+        }
+
         if (!userRegistration.getPassword().equals(userRegistration.getConfirmedPassword())) {
             throw new RuntimeException("Пароли не совпадают!");
         }
