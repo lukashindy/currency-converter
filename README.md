@@ -45,11 +45,13 @@ CREATE TABLE history (
 );
 ```
 
-В файле application.properties необходимо указан логопасс и ссылку на сервер для подключения к БД
+В файле application.properties необходимо указать логин, пароль и ссылку на сервер для подключения к БД
 
-- spring.datasource.url=jdbc:postgresql://localhost:5432/currency_converter
-- spring.datasource.username=postgres
-- spring.datasource.password=password
+``` 
+spring.datasource.url=jdbc:postgresql://localhost:5432/currency_converter
+spring.datasource.username=postgres
+spring.datasource.password=password
+```
 
 
 # 2. Java Spring Boot.
@@ -58,5 +60,8 @@ CREATE TABLE history (
 автоматически скачивает все валюты, указанные по ссылке в тестовом задании. Поскольку в нем нет самой российской валюты,
 то также она также была добавлена в базу данных. 
 
-
+Чтобы программу запустить, достаточно в терминале ввести команду, или найти и запустить метод main():
+```
+mvn spring-boot:run
+```
 
