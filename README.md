@@ -4,8 +4,9 @@
 
 
 
-# 1. PostgreSQL 
-Скрипт на создание базы данных в PostreSQL - выполнен перед разработкой на коде Java (Spring Framework, Spring Boot)
+# 1. PostgreSQL.
+
+Скрипт на создание базы данных в PostgreSQL - выполнен перед разработкой на коде Java (Spring Framework, Spring Boot)
 
 ``` 
 create database currency_converter
@@ -51,7 +52,7 @@ CREATE TABLE history (
 - spring.datasource.password=password
 
 
-#2. Java Spring
+# 2. Java Spring Boot.
 
 Данное приложение позволяет проводить расчеты по валютам, а также просматривать истории. Кроме того, приложение 
 автоматически скачивает все валюты, указанные по ссылке в тестовом задании. Поскольку в нем нет самой российской валюты,
