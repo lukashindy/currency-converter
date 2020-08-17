@@ -61,7 +61,8 @@
                                         <label for="source_sum">Начальная сумма:</label>
                                         <input id="source_sum" type="text" class="form-control" name="source_sum"
                                                placeholder="Введите сумму" autofocus="autofocus"
-                                               th:field="*{sourceSum}" required>
+                                               pattern="^[0-9.]*$" title="Допустимые символы: '.' и 0-9"
+                                               th:field="*{sourceSum}" required >
                                     </div>
                                 </div>
 
@@ -70,7 +71,6 @@
                                     <div class="col-md-9 form-group" th:align="center">
                                         <label for="target_sum">Полученная сумма</label>
                                         <input id="target_sum" type="text" class="form-control" disabled="disabled" th:value="${targetSum}"/>
-<!--                                        <input id="target_sum" type="text" class="form-control" disabled="disabled" th:value="${returnedHistory.getTargetSum() != null}? ${returnedHistory.getTargetSum()} : 0"/>-->
                                     </div>
                                 </div>
                             </div>
