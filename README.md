@@ -7,6 +7,7 @@
 # 1. PostgreSQL 
 Скрипт на создание базы данных в PostreSQL - выполнен перед разработкой на коде Java (Spring Framework, Spring Boot)
 
+``` 
 create database currency_converter
 
 create table users (
@@ -41,6 +42,7 @@ CREATE TABLE history (
     FOREIGN KEY (source_currency_id) REFERENCES currency (id),
     FOREIGN KEY (target_currency_id) REFERENCES currency (id)
 );
+```
 
 В файле application.properties необходимо указан логопасс и ссылку на сервер для подключения к БД
 
