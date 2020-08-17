@@ -14,6 +14,7 @@ import lukashindy.utils.MoneyParsing;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -29,13 +30,15 @@ public class HistoryServiceImpl implements HistoryService {
     private final HistoryRepository historyRepository;
     private final CurrencyRateService currencyRateService;
 
-    public HistoryServiceImpl(CurrencyRepository currencyRepository, CurrencyRateRepository currencyRateRepository, HistoryRepository historyRepository, CurrencyRateService currencyRateService) {
+    public HistoryServiceImpl(CurrencyRepository currencyRepository, CurrencyRateRepository currencyRateRepository,
+                              HistoryRepository historyRepository, CurrencyRateService currencyRateService) {
         this.currencyRepository = currencyRepository;
         this.currencyRateRepository = currencyRateRepository;
         this.historyRepository = historyRepository;
         this.currencyRateService = currencyRateService;
     }
 
+    @Transactional
     public History saveNewConversion(ConverterForm converterForm) throws ParserConfigurationException, SAXException, IOException {
 
         Currency source = currencyRepository.findCurrencyByCharCode(converterForm.getSourceCharCode());
@@ -60,10 +63,12 @@ public class HistoryServiceImpl implements HistoryService {
         log.info(history.toString());
         historyRepository.save(history);
 
-        return historyRepository.findById(history.getId()).orElse(null);
+        log.info("New saved history: " + historyRepository.findById(history.getId()));
+        return history;
     }
 
     public List<History> findAll(String source, String target) {
+        log.info("Parameters of searching: " + source + ", " + target);
         return historyRepository.findAll(source, target);
     }
 
@@ -73,9 +78,8 @@ public class HistoryServiceImpl implements HistoryService {
     }
 
     public List<History> findAll(String source, String target, Date date) {
+        log.info("Parameters of searching: " + source + ", " + target + ", " + date);
         return historyRepository.findAll(source, target, date);
     }
-
-
 
 }

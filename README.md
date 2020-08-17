@@ -11,8 +11,8 @@ create database currency_converter
 
 create table users (
     id             bigint primary key not null,
-    login         varchar(30) NOT NULL,
-    password     varchar(100) NOT NULL
+    login          varchar(30) UNIQUE NOT NULL,
+    password       varchar(100) NOT NULL
 );
 
 CREATE TABLE currency (
@@ -37,7 +37,7 @@ CREATE TABLE history (
     target_currency_id  varchar(10) NOT NULL,
     source_sum          bigdecimal(18,4) NOT NULL,
     target_sum          bigdecimal(18,4) NOT NULL,
-    date_history        timestamp NOT NULL,
+    date_history        date NOT NULL,
     FOREIGN KEY (source_currency_id) REFERENCES currency (id),
     FOREIGN KEY (target_currency_id) REFERENCES currency (id)
 );

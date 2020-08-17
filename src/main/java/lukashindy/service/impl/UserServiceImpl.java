@@ -1,5 +1,6 @@
 package lukashindy.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import lukashindy.model.user.User;
 import lukashindy.model.user.UserPrincipal;
 import lukashindy.model.user.UserRegistration;
@@ -9,8 +10,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -24,6 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User save(UserRegistration userRegistration) {
 
         User newUser = userRepository.findByUsername(userRegistration.getUsername());
@@ -37,6 +41,8 @@ public class UserServiceImpl implements UserService {
 
         User user = new User(userRegistration.getUsername(), passwordEncoder.encode(userRegistration.getPassword()));
         userRepository.save(user);
+
+        log.info("New user: " + userRepository.findByUsername(user.getUsername()));
         return user;
     }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body}, 'currency')}">
 <head>
     <meta charset="UTF-8">
     <title>Список валют</title>
@@ -28,16 +28,23 @@
                     <div class="table-responsive">
                         <table class="table table-hover ">
                             <tbody>
+                            <tr>
+                                <th>Идентификатор</th>
+                                <th>Номер</th>
+                                <th>Аббревиатура</th>
+                                <th>Номинал</th>
+                                <th>Наименование</th>
+                                <th>Значение</th>
+                                <th>Дата</th>
+                            </tr>
                             <tr th:each="rate : ${rates}">
-                                <p>
                                 <td th:text="${rate.getCurrency().getId()}">1</td>
                                 <td th:text="${rate.getCurrency().getNumCode()}">IU</td>
                                 <td th:text="${rate.getCurrency().getCharCode()}">323</td>
                                 <td th:text="${rate.getCurrency().getNominal()}">10</td>
                                 <td th:text="${rate.getCurrency().getName()}">Name</td>
                                 <td th:text="${rate.getValue()}">123</td>
-                                <td th:text="${rate.getDate()}">123</td>
-                                </p>
+                                <td th:text="${#dates.format(rate.getDate(), 'dd.MM.yyyy')}">123</td>
                             </tr>
                             </tbody>
                         </table>

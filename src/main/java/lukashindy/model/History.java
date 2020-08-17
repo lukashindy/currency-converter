@@ -49,8 +49,8 @@ public class History {
     public String toString() {
         return "History{" +
                 "id=" + id +
-                ", sourceCurrency=" + sourceCurrency +
-                ", targetCurrency=" + targetCurrency +
+                ", source=" + sourceCurrency.getCharCode() +
+                ", target=" + targetCurrency.getCharCode() +
                 ", sourceSum=" + sourceSum +
                 ", targetSum=" + targetSum +
                 ", date=" + date +

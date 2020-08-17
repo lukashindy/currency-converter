@@ -9,6 +9,7 @@ import lukashindy.utils.HelperParse;
 import lukashindy.utils.MoneyParsing;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -24,7 +25,7 @@ import java.util.*;
 public class CurrencyRateServiceImpl implements CurrencyRateService {
 
     private final String url_request = "http://www.cbr.ru/scripts/XML_daily.asp";
-    private final Set<CurrencyRate> addCurrencyRate = new HashSet<>();
+    private Set<CurrencyRate> addCurrencyRate = new HashSet<>();
 
     private final CurrencyRateRepository currencyRateRepository;
     private final CurrencyRepository currencyRepository;
@@ -49,6 +50,7 @@ public class CurrencyRateServiceImpl implements CurrencyRateService {
         return currencyRates;
     }
 
+    @Transactional
     public Set<CurrencyRate> addRate() throws IOException, SAXException, ParserConfigurationException {
 
         NodeList nList = HelperParse.nodeList(url_request, "Valute");
@@ -74,4 +76,24 @@ public class CurrencyRateServiceImpl implements CurrencyRateService {
             currencyRateRepository.saveAll(addCurrencyRate);
         }
     }
+
+
+
+
+
+
+
+
+    @Override
+    public List<CurrencyRate> findAllByDateOrderByCurrencyNameAsc(Date date) throws ParserConfigurationException, SAXException, IOException {
+
+        // Проверим на одной из валют, т.к. добавим в любом случае для всех валют - вдруг, другая дата будет стоять
+        Optional<CurrencyRate> checkRate = currencyRateRepository.findByCurrencyIdAndDate("R01235", date);
+        if (checkRate.isEmpty()) {
+            addCurrencyRate = addRate();
+        }
+        return currencyRateRepository.findAllByDateOrderByCurrencyNameAsc(date);
+    }
+
+
 }

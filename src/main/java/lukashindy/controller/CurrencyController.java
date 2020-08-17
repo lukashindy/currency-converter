@@ -2,6 +2,7 @@ package lukashindy.controller;
 
 import lukashindy.model.ConverterForm;
 import lukashindy.model.History;
+import lukashindy.repository.CurrencyRateRepository;
 import lukashindy.service.interfaces.CurrencyRateService;
 import lukashindy.service.interfaces.CurrencyService;
 import lukashindy.service.interfaces.HistoryService;
@@ -14,37 +15,35 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 @RequestMapping
 public class CurrencyController {
 
-    private List<History> lastHistories = new ArrayList<>();
+    private final List<History> lastHistories = new ArrayList<>();
     private History returnedHistory;
 
     private Double targetSum = 0.0;
 
     private final HistoryService historyService;
-    private final CurrencyService currencyService;
     private final CurrencyRateService currencyRateService;
 
-    public CurrencyController(HistoryService historyService, CurrencyService currencyService, CurrencyRateService currencyRateService) {
+    public CurrencyController(HistoryService historyService, CurrencyRateService currencyRateService) {
         this.historyService = historyService;
-        this.currencyService = currencyService;
         this.currencyRateService = currencyRateService;
     }
 
     @GetMapping("/currencies")
-    public String getCurrencies(Model model) {
-        model.addAttribute("rates", currencyRateService.findAll());
+    public String getCurrencies(Model model) throws IOException, SAXException, ParserConfigurationException {
+        model.addAttribute("rates", currencyRateService.findAllByDateOrderByCurrencyNameAsc(new Date()));
         return "currency";
     }
 
     @GetMapping("/converter/form")
     public String getForm(Model model) {
         model.addAttribute("list", currencyRateService.findAll());
-
         model.addAttribute("history", new ConverterForm());
         model.addAttribute("lastHistories", lastHistories);
         model.addAttribute("targetSum", targetSum);

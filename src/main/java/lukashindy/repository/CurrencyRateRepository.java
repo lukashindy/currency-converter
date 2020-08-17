@@ -14,4 +14,6 @@ public interface CurrencyRateRepository extends JpaRepository<CurrencyRate, Curr
 
     List<CurrencyRate> findAllByDateOrderByCurrencyCharCode(Date date);
 
+    List<CurrencyRate> findAllByDateOrderByCurrencyNameAsc(Date date);
+
 }
